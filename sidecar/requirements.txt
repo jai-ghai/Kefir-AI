@@ -1,0 +1,8 @@
+# Core — required
+faster-whisper>=1.0.3
+
+# Optional — for speaker diarization on the THEM stream
+# Needs a Hugging Face token and model agreement:
+#   https://huggingface.co/pyannote/speaker-diarization-3.1
+# pyannote.audio>=3.3.2
+# torch>=2.2.0
