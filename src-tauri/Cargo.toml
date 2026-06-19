@@ -26,6 +26,9 @@ uuid         = { version = "1", features = ["v4"] }
 chrono       = "0.4"
 once_cell    = "1"
 tempfile     = "3"
+# Real-time streaming transcription (Deepgram / AssemblyAI)
+tokio-tungstenite = { version = "0.24", features = ["rustls-tls-webpki-roots"] }
+futures-util = "0.3"
 
 # Windows-specific: raw WASAPI loopback
 [target.'cfg(windows)'.dependencies]

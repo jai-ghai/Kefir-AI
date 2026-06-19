@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Meeting Intelligence - Completion Summary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #e2e8f0;
+      border-radius: 10px;
+    }
+    body {
+      background-color: #f7f9fb;
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "on-tertiary-fixed": "#0b1c30",
+                  "error": "#ba1a1a",
+                  "on-secondary-container": "#5c647a",
+                  "inverse-surface": "#2d3133",
+                  "background": "#f7f9fb",
+                  "on-primary-fixed-variant": "#003ea8",
+                  "surface-container": "#eceef0",
+                  "primary-fixed-dim": "#b4c5ff",
+                  "on-secondary-fixed": "#131b2e",
+                  "on-surface": "#191c1e",
+                  "on-error": "#ffffff",
+                  "on-tertiary-fixed-variant": "#38485d",
+                  "surface-container-high": "#e6e8ea",
+                  "surface-dim": "#d8dadc",
+                  "tertiary-fixed-dim": "#b7c8e1",
+                  "surface-tint": "#0053db",
+                  "secondary-fixed": "#dae2fd",
+                  "error-container": "#ffdad6",
+                  "on-secondary-fixed-variant": "#3f465c",
+                  "surface-container-lowest": "#ffffff",
+                  "outline-variant": "#c3c6d7",
+                  "tertiary": "#46566c",
+                  "inverse-on-surface": "#eff1f3",
+                  "on-error-container": "#93000a",
+                  "primary-container": "#2563eb",
+                  "surface": "#f7f9fb",
+                  "tertiary-container": "#5e6e85",
+                  "on-surface-variant": "#434655",
+                  "surface-container-highest": "#e0e3e5",
+                  "secondary-fixed-dim": "#bec6e0",
+                  "secondary": "#565e74",
+                  "inverse-primary": "#b4c5ff",
+                  "outline": "#737686",
+                  "tertiary-fixed": "#d3e4fe",
+                  "on-secondary": "#ffffff",
+                  "primary": "#004ac6",
+                  "surface-container-low": "#f2f4f6",
+                  "secondary-container": "#dae2fd",
+                  "on-tertiary": "#ffffff",
+                  "surface-variant": "#e0e3e5",
+                  "on-primary-container": "#eeefff",
+                  "on-background": "#191c1e",
+                  "surface-bright": "#f7f9fb",
+                  "on-primary": "#ffffff",
+                  "on-tertiary-container": "#e9f0ff",
+                  "on-primary-fixed": "#00174b",
+                  "primary-fixed": "#dbe1ff"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.125rem",
+                  "lg": "0.25rem",
+                  "xl": "0.5rem",
+                  "full": "0.75rem"
+          },
+          "spacing": {
+                  "margin-desktop": "40px",
+                  "content-max-width": "1200px",
+                  "base": "4px",
+                  "gutter": "24px",
+                  "margin-mobile": "16px",
+                  "sidebar-width": "280px"
+          },
+          "fontFamily": {
+                  "headline-lg": ["Inter"],
+                  "headline-lg-mobile": ["Inter"],
+                  "body-md": ["Inter"],
+                  "label-mono": ["Geist"],
+                  "body-lg": ["Inter"],
+                  "timestamp": ["Geist"],
+                  "transcript-text": ["Inter"],
+                  "headline-md": ["Inter"]
+          },
+          "fontSize": {
+                  "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                  "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                  "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                  "label-mono": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                  "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                  "timestamp": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                  "transcript-text": ["15px", {"lineHeight": "26px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                  "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface font-body-md">
+<!-- SideNavBar Anchor -->
+<aside class="fixed left-0 top-0 h-full w-20 bg-surface border-r border-outline-variant flex flex-col py-10 px-2 z-50">
+<div class="mb-10 px-4"><div class="flex justify-center"><span class="material-symbols-outlined text-primary text-[32px]">psychology</span></div></div>
+<nav class="flex-1 space-y-1"><a class="flex items-center justify-center py-4 text-primary border-r-2 border-primary bg-surface-container-high transition-colors" href="#"><span class="material-symbols-outlined">home</span></a><a class="flex items-center justify-center py-4 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="#"><span class="material-symbols-outlined">folder</span></a><a class="flex items-center justify-center py-4 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="#"><span class="material-symbols-outlined">video_chat</span></a><a class="flex items-center justify-center py-4 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="#"><span class="material-symbols-outlined">database</span></a><a class="flex items-center justify-center py-4 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="#"><span class="material-symbols-outlined">check_circle</span></a><a class="flex items-center justify-center py-4 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="#"><span class="material-symbols-outlined">calendar_today</span></a><a class="flex items-center justify-center py-4 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="#"><span class="material-symbols-outlined">settings</span></a></nav>
+<div class="mt-auto px-4"><button class="w-12 h-12 mx-auto bg-primary text-on-primary font-bold rounded-lg flex items-center justify-center hover:opacity-90 transition-opacity"><span class="material-symbols-outlined">mic</span></button></div>
+</aside>
+<!-- TopAppBar Anchor -->
+<header class="flex justify-between items-center w-full px-10 sticky top-0 z-40 ml-20 max-w-[calc(100%-80px)] h-16 bg-background border-b border-outline-variant">
+<div class="flex items-center gap-6">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">Meeting Intelligence</span>
+<div class="relative group">
+<span class="absolute inset-y-0 left-3 flex items-center text-outline group-focus-within:text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="search">search</span>
+</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container-low border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-body-md w-64 transition-all" placeholder="Search transcripts..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate executive in a modern workspace, lit with soft natural light. The style is clean and high-fidelity, following a professional corporate intelligence platform's aesthetic with a neutral color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKLI6kpZG8UcL7jXC3Ww7mc_z9fFQ7U_T27bt3jDYPtw8bNL-tw--PbgvlmZySGXq-7ceURJLF_O_DufNTlMamxVZsykgozGy_iomAkGENuUUKUmhZPNefqdWDSmXklxa1CJP-jL0aLznlCS-8UZQRligwSzV28JmrzC3RqlX0L33A2qzHTzOb_J9zdnqBVqym2XJ4Afuw_aQ9fahzc0T2CQrvbphAtGc3BtLZvVR19DCHKPWA65dckTiXwY1QX33YKoSecdo3PS9m"/>
+</div>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded-lg font-label-mono uppercase text-[12px] font-bold hover:opacity-90 transition-opacity">
+        Create New
+      </button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-20 p-10 max-w-[1200px] mx-auto">
+<!-- Success Header -->
+<div class="mb-12 flex items-end justify-between">
+<div>
+<div class="flex items-center gap-2 text-primary mb-2">
+<span class="material-symbols-outlined" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-mono text-label-mono uppercase tracking-widest">Meeting Analysis Complete</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Q4 Platform Roadmap Sync</h2>
+<p class="text-on-surface-variant mt-2 max-w-2xl">Transcription finalized and intelligence modules have mapped discussion points to product requirements. Review the structured output below.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 border border-outline-variant px-4 py-2 rounded-lg hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="share">share</span>
+<span class="font-body-md font-medium">Share Report</span>
+</button>
+<button class="flex items-center gap-2 bg-on-tertiary-fixed text-white px-4 py-2 rounded-lg hover:opacity-90 transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="download">download</span>
+<span class="font-body-md font-medium">Export PDF</span>
+</button>
+</div>
+</div>
+<!-- Quick Metrics Row -->
+<div class="grid grid-cols-4 gap-6 mb-8">
+<div class="bg-white border border-outline-variant p-6 rounded-lg">
+<span class="text-on-surface-variant font-label-mono text-label-mono uppercase">Duration</span>
+<div class="mt-2 text-headline-md font-bold text-on-surface">54m 12s</div>
+</div>
+<div class="bg-white border border-outline-variant p-6 rounded-lg">
+<span class="text-on-surface-variant font-label-mono text-label-mono uppercase">Decisions Made</span>
+<div class="mt-2 text-headline-md font-bold text-primary">08</div>
+</div>
+<div class="bg-white border border-outline-variant p-6 rounded-lg">
+<span class="text-on-surface-variant font-label-mono text-label-mono uppercase">Open Questions</span>
+<div class="mt-2 text-headline-md font-bold text-error">03</div>
+</div>
+<div class="bg-white border border-outline-variant p-6 rounded-lg">
+<span class="text-on-surface-variant font-label-mono text-label-mono uppercase">Sentiment Index</span>
+<div class="mt-2 text-headline-md font-bold text-on-surface">88% <span class="text-body-md font-normal text-on-surface-variant">Positive</span></div>
+</div>
+</div>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-12 gap-8">
+<!-- Left Column: Summary & Points -->
+<div class="col-span-8 space-y-8">
+<!-- Overview Section -->
+<section class="bg-white border border-outline-variant p-8 rounded-lg">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="description">description</span>
+<h3 class="font-headline-md text-headline-md">Overview</h3>
+</div>
+<p class="text-transcript-text font-transcript-text leading-relaxed text-on-surface-variant">
+            The meeting focused on aligning the engineering and product teams for the upcoming Q4 rollout. Primary concerns revolved around the scalability of the new real-time analytics engine and the integration with legacy CRM systems. Executive stakeholders confirmed the budget allocation for three additional senior hires to accelerate the data pipeline migration.
+          </p>
+</section>
+<!-- Discussion Points & Next Steps -->
+<div class="grid grid-cols-2 gap-8">
+<section class="bg-white border border-outline-variant p-8 rounded-lg">
+<div class="flex items-center gap-2 mb-6 border-b border-outline-variant pb-4">
+<span class="material-symbols-outlined text-secondary" data-icon="lightbulb">lightbulb</span>
+<h3 class="font-headline-md text-headline-md">Key Points</h3>
+</div>
+<ul class="space-y-4">
+<li class="flex gap-3">
+<span class="mt-1 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0"></span>
+<p class="text-body-md text-on-surface">Cloud infrastructure migration will begin Phase 1 on November 15th.</p>
+</li>
+<li class="flex gap-3">
+<span class="mt-1 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0"></span>
+<p class="text-body-md text-on-surface">API rate limits for third-party developers were finalized at 100 req/sec.</p>
+</li>
+<li class="flex gap-3">
+<span class="mt-1 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0"></span>
+<p class="text-body-md text-on-surface">The "Search Intelligence" feature will be delayed until Q1 due to UX constraints.</p>
+</li>
+</ul>
+</section>
+<section class="bg-white border border-outline-variant p-8 rounded-lg">
+<div class="flex items-center gap-2 mb-6 border-b border-outline-variant pb-4">
+<span class="material-symbols-outlined text-primary" data-icon="assignment_turned_in">assignment_turned_in</span>
+<h3 class="font-headline-md text-headline-md">Next Steps</h3>
+</div>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<div class="h-8 w-8 flex-shrink-0 flex items-center justify-center rounded border border-outline text-outline-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="check">check</span>
+</div>
+<div>
+<p class="text-body-md font-semibold text-on-surface">Finalize hiring plan</p>
+<p class="text-[12px] text-on-surface-variant">Assigned: Sarah Jenkins • Due: Oct 12</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="h-8 w-8 flex-shrink-0 flex items-center justify-center rounded border border-outline text-outline-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="check">check</span>
+</div>
+<div>
+<p class="text-body-md font-semibold text-on-surface">Architecture Review</p>
+<p class="text-[12px] text-on-surface-variant">Assigned: Dev Ops Team • Due: Oct 15</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="h-8 w-8 flex-shrink-0 flex items-center justify-center rounded border border-outline text-outline-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="check">check</span>
+</div>
+<div>
+<p class="text-body-md font-semibold text-on-surface">Draft Client Email</p>
+<p class="text-[12px] text-on-surface-variant">Assigned: Product Marketing • Due: Oct 10</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Agenda Validation -->
+<section class="bg-white border border-outline-variant rounded-lg overflow-hidden">
+<div class="p-8 border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="fact_check">fact_check</span>
+<h3 class="font-headline-md text-headline-md">Agenda Validation</h3>
+</div>
+<div class="text-on-surface-variant text-[12px] font-label-mono">MAPPED AGAINST: Sync_Agenda_v2.pdf</div>
+</div>
+<table class="w-full text-left">
+<thead class="bg-surface-container-lowest border-b border-outline-variant">
+<tr>
+<th class="px-8 py-3 text-label-mono font-label-mono uppercase text-on-surface-variant">Agenda Item</th>
+<th class="px-8 py-3 text-label-mono font-label-mono uppercase text-on-surface-variant">Status</th>
+<th class="px-8 py-3 text-label-mono font-label-mono uppercase text-on-surface-variant">Time Spent</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr>
+<td class="px-8 py-4 text-body-md font-medium">Q3 Retrospective</td>
+<td class="px-8 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-green-50 text-green-700 border border-green-200">COVERED</span>
+</td>
+<td class="px-8 py-4 text-timestamp font-timestamp text-on-surface-variant">08m 40s</td>
+</tr>
+<tr>
+<td class="px-8 py-4 text-body-md font-medium">Resource Allocation</td>
+<td class="px-8 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-yellow-50 text-yellow-700 border border-yellow-200">PARTIALLY COVERED</span>
+</td>
+<td class="px-8 py-4 text-timestamp font-timestamp text-on-surface-variant">22m 15s</td>
+</tr>
+<tr>
+<td class="px-8 py-4 text-body-md font-medium">Tech Debt Audit</td>
+<td class="px-8 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-red-50 text-red-700 border border-red-200">MISSED</span>
+</td>
+<td class="px-8 py-4 text-timestamp font-timestamp text-on-surface-variant">--</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+<!-- Right Column: Requirement Validation & Details -->
+<div class="col-span-4 space-y-8">
+<!-- Requirement Validation -->
+<section class="bg-white border border-outline-variant p-8 rounded-lg">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="rule">rule</span>
+<h3 class="font-headline-md text-headline-md">PRD Alignment</h3>
+</div>
+<div class="space-y-6">
+<div class="p-4 bg-surface-container-low rounded-lg border-l-4 border-primary">
+<div class="flex justify-between items-center mb-2">
+<span class="text-[11px] font-bold font-label-mono text-primary uppercase">ALIGNED</span>
+<span class="text-on-surface-variant text-[11px]">SPEC-402</span>
+</div>
+<p class="text-body-md font-medium">Data Encryption Standard</p>
+<p class="text-[12px] text-on-surface-variant mt-1 italic">Discussion confirmed AES-256 implementation as per PRD Section 4.2.</p>
+</div>
+<div class="p-4 bg-surface-container-low rounded-lg border-l-4 border-error">
+<div class="flex justify-between items-center mb-2">
+<span class="text-[11px] font-bold font-label-mono text-error uppercase">CONFLICTING</span>
+<span class="text-on-surface-variant text-[11px]">UI-091</span>
+</div>
+<p class="text-body-md font-medium">Mobile Navigation Pattern</p>
+<p class="text-[12px] text-on-surface-variant mt-1 italic">Design suggested a drawer, but dev team noted PRD mandates a bottom bar for thumb reach.</p>
+</div>
+</div>
+</section>
+<!-- Visualization / Participants -->
+<section class="bg-on-tertiary-fixed text-white p-8 rounded-lg relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-label-mono text-label-mono uppercase text-tertiary-fixed mb-4">Engagement Map</h4>
+<div class="h-40 flex items-center justify-center border border-on-tertiary-fixed-variant rounded bg-on-tertiary-fixed/50 backdrop-blur-sm mb-6">
+<!-- Simulated Graph -->
+<div class="flex items-end gap-1 w-full px-4 h-24">
+<div class="bg-primary w-full" style="height: 40%"></div>
+<div class="bg-primary w-full" style="height: 60%"></div>
+<div class="bg-primary w-full" style="height: 35%"></div>
+<div class="bg-primary-fixed w-full" style="height: 90%"></div>
+<div class="bg-primary w-full" style="height: 55%"></div>
+<div class="bg-primary w-full" style="height: 20%"></div>
+<div class="bg-primary w-full" style="height: 45%"></div>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="text-body-md font-medium">Sarah J. (Host)</span>
+<span class="text-[12px] text-tertiary-fixed">34% participation</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-body-md font-medium">Mark T. (Eng)</span>
+<span class="text-[12px] text-tertiary-fixed">28% participation</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-body-md font-medium">Elena R. (Design)</span>
+<span class="text-[12px] text-tertiary-fixed">15% participation</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Related Documentation -->
+<section class="bg-white border border-outline-variant p-8 rounded-lg">
+<h3 class="font-headline-md text-headline-md mb-6">Linked Knowledge</h3>
+<div class="space-y-4">
+<a class="flex items-center gap-3 group" href="#">
+<div class="h-10 w-10 flex items-center justify-center bg-surface-container-high rounded group-hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="article">article</span>
+</div>
+<div>
+<p class="text-body-md font-medium group-hover:text-primary transition-colors">Q4 Roadmap Deck.v4</p>
+<p class="text-[11px] text-on-surface-variant">Updated 2h ago</p>
+</div>
+</a>
+<a class="flex items-center gap-3 group" href="#">
+<div class="h-10 w-10 flex items-center justify-center bg-surface-container-high rounded group-hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="description">description</span>
+</div>
+<div>
+<p class="text-body-md font-medium group-hover:text-primary transition-colors">API Specification 2.0</p>
+<p class="text-[11px] text-on-surface-variant">Confidential • PDF</p>
+</div>
+</a>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Sticky Bottom Controls for focused summary -->
+<footer class="fixed bottom-6 right-6 flex flex-col gap-2 z-50">
+<button class="bg-primary text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform active:opacity-80" title="Review Transcript">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+</button>
+<button class="bg-white text-on-surface-variant border border-outline-variant w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform active:opacity-80" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to Top">
+<span class="material-symbols-outlined" data-icon="arrow_upward">arrow_upward</span>
+</button>
+</footer>
+<script>
+    // Micro-interactions for validation badges
+    document.querySelectorAll('[data-icon]').forEach(icon => {
+      icon.classList.add('material-symbols-outlined');
+    });
+
+    // Simple interaction to highlight items on hover
+    const listItems = document.querySelectorAll('li');
+    listItems.forEach(li => {
+      li.addEventListener('mouseenter', () => {
+        li.style.transform = 'translateX(4px)';
+        li.style.transition = 'transform 0.2s ease-out';
+      });
+      li.addEventListener('mouseleave', () => {
+        li.style.transform = 'translateX(0)';
+      });
+    });
+  </script>
+</body></html>

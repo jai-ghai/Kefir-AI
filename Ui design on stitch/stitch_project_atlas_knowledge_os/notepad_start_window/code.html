@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Meeting Intelligence - New Note</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .writing-area:focus {
+            outline: none;
+        }
+        /* Custom scrollbar for minimalist look */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #cbd5e1;
+        }
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: #004ac6 }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#e9f0ff",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#dbe1ff",
+                        "on-surface-variant": "#434655",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "outline": "#737686",
+                        "secondary-fixed-dim": "#bec6e0",
+                        "surface": "#f7f9fb",
+                        "inverse-primary": "#b4c5ff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "inverse-surface": "#2d3133",
+                        "background": "#f7f9fb",
+                        "surface-tint": "#0053db",
+                        "on-primary-container": "#eeefff",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#5c647a",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container": "#eceef0",
+                        "secondary-fixed": "#dae2fd",
+                        "on-secondary-fixed": "#131b2e",
+                        "surface-dim": "#d8dadc",
+                        "outline-variant": "#c3c6d7",
+                        "on-background": "#191c1e",
+                        "surface-container-low": "#f2f4f6",
+                        "primary-container": "#2563eb",
+                        "on-secondary-fixed-variant": "#3f465c",
+                        "on-primary-fixed": "#00174b",
+                        "tertiary-fixed": "#d3e4fe",
+                        "surface-bright": "#f7f9fb",
+                        "secondary": "#565e74",
+                        "surface-variant": "#e0e3e5",
+                        "on-surface": "#191c1e",
+                        "tertiary-container": "#5e6e85",
+                        "secondary-container": "#dae2fd",
+                        "on-error": "#ffffff",
+                        "tertiary": "#46566c",
+                        "inverse-on-surface": "#eff1f3",
+                        "primary": "#004ac6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px",
+                        "base": "4px",
+                        "gutter": "24px",
+                        "sidebar-width": "280px",
+                        "content-max-width": "1200px"
+                    },
+                    "fontFamily": {
+                        "transcript-text": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-mono": ["Geist"],
+                        "timestamp": ["Geist"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "transcript-text": ["15px", {"lineHeight": "26px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-mono": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "timestamp": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background font-body-md text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Top Navigation Anchor (Shared Component Mapping) -->
+<header class="flex justify-between items-center w-full px-margin-desktop sticky top-0 z-50 h-16 bg-background border-b border-outline-variant">
+<div class="flex items-center gap-6">
+<span class="font-headline-md text-headline-md font-extrabold text-on-surface">Kefir</span>
+<div class="hidden md:flex items-center space-x-8">
+<nav class="flex gap-6">
+<a class="font-label-mono text-label-mono uppercase text-primary border-b-2 border-primary py-5" href="#">New Note</a>
+<a class="font-label-mono text-label-mono uppercase text-on-surface-variant hover:text-primary transition-colors py-5" href="#">History</a>
+<a class="font-label-mono text-label-mono uppercase text-on-surface-variant hover:text-primary transition-colors py-5" href="#">Collaborators</a>
+</nav>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center space-x-2 mr-4">
+<span class="material-symbols-outlined text-outline text-[20px]">cloud_done</span>
+<span class="text-label-mono font-label-mono text-outline uppercase tracking-widest">Saved</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer p-2 transition-colors">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer p-2 transition-colors">help</span>
+<div class="h-8 w-8 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional studio headshot of a corporate executive in a modern workspace environment, soft natural lighting, minimalist high-key photography style, neutral grey background, high resolution and sharp detail." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfl8xy7zWdMocc6Un6qx7iHTTSM9uDFib-t6aUpxb8Hb-Bj0F_jik1-GuOxjddKZPujDDQAV9RVUNFVZJQ_ETlcpLhAUjTy3c4ODRB-qxGturVCAZpI7FezuoB9UhuGG0Bahq-psf8rQV2_nWGCPf_we4fOAsaQnniAx4Q_uWyEqzyEjfmEFRn9ephrQC-rOtEdftVc_B7asVeLJE652evWdtwZkbIxYbOt2_kdw7qISEQrHDasqnjDzdRUzUSunPodGa4SCY-txhd"/>
+</div>
+</div>
+</div>
+</header>
+<main class="flex min-h-[calc(100vh-64px)] overflow-hidden">
+<!-- Collapsed Sidebar Placeholder as per Requirement -->
+<aside class="hidden lg:flex flex-col w-16 border-r border-outline-variant bg-surface items-center py-8 gap-8">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">home</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">folder</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">video_chat</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">database</span>
+<span class="material-symbols-outlined text-primary font-bold">edit_note</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">calendar_today</span>
+<div class="mt-auto">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">settings</span>
+</div>
+</aside>
+<!-- Main Workspace -->
+<div class="flex-1 relative flex flex-col items-center bg-background px-margin-mobile md:px-0">
+<!-- Floating Atmosphere Interaction (Subtle Background) -->
+<div class="absolute inset-0 pointer-events-none opacity-40">
+
+</div>
+<!-- Focus Canvas -->
+<div class="relative z-10 w-full max-w-content-max-width mt-12 mb-24 px-8 md:px-16 lg:px-32 flex-1 flex flex-col">
+<!-- Metadata / Context -->
+<div class="flex items-center gap-4 mb-8 text-on-surface-variant">
+<span class="text-timestamp font-timestamp flex items-center gap-1.5 opacity-60">
+<span class="material-symbols-outlined text-[14px]">event</span>
+                        Oct 24, 2023
+                    </span>
+<span class="w-1 h-1 rounded-full bg-outline-variant opacity-40"></span>
+<span class="text-timestamp font-timestamp flex items-center gap-1.5 opacity-60">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                        14:02 PM
+                    </span>
+</div>
+<!-- Title Area -->
+<input class="bg-transparent border-none p-0 mb-6 font-headline-lg text-headline-lg focus:ring-0 placeholder:text-surface-container-highest w-full" placeholder="Note Title" type="text"/>
+<!-- Distraction-free Writing Area -->
+<div class="relative flex-1">
+<div class="writing-area w-full h-full font-transcript-text text-transcript-text text-on-surface min-h-[400px] pb-32" contenteditable="true" data-placeholder="Type something..." id="editor"></div>
+<!-- Floating Caret Simulation -->
+<style>
+                        [contenteditable]:empty:before {
+                            content: attr(data-placeholder);
+                            color: #cbd5e1;
+                            cursor: text;
+                        }
+                    </style>
+</div>
+</div>
+<!-- Contextual Quick Starters (Bottom Sticky) -->
+<div class="fixed bottom-12 left-1/2 -translate-x-1/2 z-20 w-full max-w-2xl px-6">
+<div class="bg-surface-container-lowest/80 backdrop-blur-xl border border-outline-variant rounded-full p-2 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-1 overflow-x-auto no-scrollbar">
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-full hover:bg-surface-container transition-colors group whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px] text-primary transition-transform group-hover:scale-110" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-body-md text-body-md text-on-secondary-fixed-variant">Draft Agenda</span>
+</button>
+<span class="h-4 w-[1px] bg-outline-variant mx-1"></span>
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-full hover:bg-surface-container transition-colors group whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px] text-secondary">task_alt</span>
+<span class="font-body-md text-body-md text-on-secondary-fixed-variant">Note a Decision</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-full hover:bg-surface-container transition-colors group whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px] text-error">warning</span>
+<span class="font-body-md text-body-md text-on-secondary-fixed-variant">Flag a Risk</span>
+</button>
+</div>
+<div class="flex items-center gap-1 ml-2 border-l border-outline-variant pl-2">
+<button class="p-2 rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">mic</span>
+</button>
+</div>
+</div>
+<p class="text-center mt-4 font-label-mono text-[10px] uppercase tracking-[0.1em] text-outline opacity-50">
+                    AI Insights powered by Kefir Intelligence
+                </p>
+</div>
+<!-- Toolbar Overlay (On Selection - Concept) -->
+<div class="hidden absolute top-0 left-0 bg-inverse-surface text-inverse-on-surface px-3 py-1.5 rounded-lg flex items-center gap-4 shadow-xl pointer-events-auto z-50" id="selection-toolbar">
+<button class="material-symbols-outlined text-[18px] hover:text-primary-fixed transition-colors">format_bold</button>
+<button class="material-symbols-outlined text-[18px] hover:text-primary-fixed transition-colors">format_italic</button>
+<button class="material-symbols-outlined text-[18px] hover:text-primary-fixed transition-colors">link</button>
+<span class="h-4 w-[1px] bg-outline"></span>
+<button class="material-symbols-outlined text-[18px] hover:text-primary-fixed transition-colors">chat_bubble_outline</button>
+</div>
+</div>
+<!-- Right Side Utility (Subtle) -->
+<aside class="hidden xl:flex flex-col w-72 border-l border-outline-variant bg-surface-container-low p-6 gap-8">
+<div>
+<h3 class="font-label-mono text-label-mono uppercase text-outline mb-4">Suggested Context</h3>
+<div class="space-y-4">
+<div class="p-3 bg-surface-container-lowest border border-outline-variant rounded-lg hover:border-primary transition-all cursor-pointer group">
+<p class="font-body-md text-body-md font-semibold mb-1 group-hover:text-primary transition-colors">Product Sync: Q4 Roadmap</p>
+<p class="text-[12px] text-on-surface-variant">Ongoing project • 3 members</p>
+</div>
+<div class="p-3 bg-surface-container-lowest border border-outline-variant rounded-lg hover:border-primary transition-all cursor-pointer group">
+<p class="font-body-md text-body-md font-semibold mb-1 group-hover:text-primary transition-colors">Client Interview: Acme Corp</p>
+<p class="text-[12px] text-on-surface-variant">Research • Today at 3:00 PM</p>
+</div>
+</div>
+</div>
+<div class="mt-auto border-t border-outline-variant pt-8">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-label-mono text-label-mono uppercase text-outline">Collaborators</h3>
+<span class="material-symbols-outlined text-[16px] text-outline cursor-pointer">person_add</span>
+</div>
+<div class="flex -space-x-2">
+<div class="h-8 w-8 rounded-full ring-2 ring-surface bg-primary-container flex items-center justify-center text-on-primary-container text-[10px] font-bold">JD</div>
+<div class="h-8 w-8 rounded-full ring-2 ring-surface bg-secondary-container flex items-center justify-center text-on-secondary-container text-[10px] font-bold">SR</div>
+<div class="h-8 w-8 rounded-full ring-2 ring-surface bg-surface-container-highest flex items-center justify-center text-[18px]">
+<span class="material-symbols-outlined text-[14px]">add</span>
+</div>
+</div>
+</div>
+</aside>
+</main>
+<script>
+        // Simple micro-interactions for the writing area
+        const editor = document.getElementById('editor');
+        const toolbar = document.getElementById('selection-toolbar');
+
+        // Selection detection for formatting bar (minimal implementation)
+        document.addEventListener('selectionchange', () => {
+            const selection = window.getSelection();
+            if (selection.toString().length > 0 && editor.contains(selection.anchorNode)) {
+                const range = selection.getRangeAt(0);
+                const rect = range.getBoundingClientRect();
+                
+                toolbar.style.display = 'flex';
+                toolbar.style.top = `${rect.top + window.scrollY - 45}px`;
+                toolbar.style.left = `${rect.left + (rect.width / 2) - (toolbar.offsetWidth / 2)}px`;
+            } else {
+                toolbar.style.display = 'none';
+            }
+        });
+
+        // Focus logic
+        editor.focus();
+
+        // Keyboard shortcuts concept
+        editor.addEventListener('keydown', (e) => {
+            if (e.metaKey && e.key === 's') {
+                e.preventDefault();
+                // Simulation of save
+                console.log('Saved to cloud...');
+            }
+        });
+
+        // Quick starter buttons text insertion
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const label = btn.innerText;
+                if(label.includes('Draft Agenda')) {
+                    editor.innerHTML += "<h3>Agenda:</h3><ul><li>Item 1</li><li>Item 2</li></ul>";
+                }
+            });
+        });
+    </script>
+</body></html>

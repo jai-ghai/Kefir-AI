@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MeetingMind - Meeting Workspace</title>
+<!-- Google Fonts: Inter & Geist -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#0b1c30",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#5c647a",
+                    "inverse-surface": "#2d3133",
+                    "background": "#f7f9fb",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "surface-container": "#eceef0",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-secondary-fixed": "#131b2e",
+                    "on-surface": "#191c1e",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed-variant": "#38485d",
+                    "surface-container-high": "#e6e8ea",
+                    "surface-dim": "#d8dadc",
+                    "tertiary-fixed-dim": "#b7c8e1",
+                    "surface-tint": "#0053db",
+                    "secondary-fixed": "#dae2fd",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed-variant": "#3f465c",
+                    "surface-container-lowest": "#ffffff",
+                    "outline-variant": "#c3c6d7",
+                    "tertiary": "#46566c",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-error-container": "#93000a",
+                    "primary-container": "#2563eb",
+                    "surface": "#f7f9fb",
+                    "tertiary-container": "#5e6e85",
+                    "on-surface-variant": "#434655",
+                    "surface-container-highest": "#e0e3e5",
+                    "secondary-fixed-dim": "#bec6e0",
+                    "secondary": "#565e74",
+                    "inverse-primary": "#b4c5ff",
+                    "outline": "#737686",
+                    "tertiary-fixed": "#d3e4fe",
+                    "on-secondary": "#ffffff",
+                    "primary": "#004ac6",
+                    "surface-container-low": "#f2f4f6",
+                    "secondary-container": "#dae2fd",
+                    "on-tertiary": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "on-primary-container": "#eeefff",
+                    "on-background": "#191c1e",
+                    "surface-bright": "#f7f9fb",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-container": "#e9f0ff",
+                    "on-primary-fixed": "#00174b",
+                    "primary-fixed": "#dbe1ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-desktop": "40px",
+                    "content-max-width": "1200px",
+                    "base": "4px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "sidebar-width": "280px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-mono": ["Geist"],
+                    "body-lg": ["Inter"],
+                    "timestamp": ["Geist"],
+                    "transcript-text": ["Inter"],
+                    "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-mono": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "timestamp": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "transcript-text": ["15px", {"lineHeight": "26px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .recording-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .4; }
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden h-screen flex">
+<!-- SideNavBar (The Anchor) -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface dark:bg-on-tertiary-fixed border-r border-outline-variant dark:border-outline flex flex-col py-10 px-4 z-50">
+<div class="mb-10 px-4">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Kefir</h1>
+<p class="text-on-surface-variant font-label-mono uppercase text-[10px] tracking-widest mt-1">Enterprise Intelligence</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors rounded" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-body-md">Home</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-primary dark:text-primary-fixed font-bold border-r-2 border-primary bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">folder</span>
+<span class="font-body-md">Projects</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors rounded" href="#">
+<span class="material-symbols-outlined">video_chat</span>
+<span class="font-body-md">Meetings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors rounded" href="#">
+<span class="material-symbols-outlined">database</span>
+<span class="font-body-md">Knowledge</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors rounded" href="#">
+<span class="material-symbols-outlined">check_circle</span>
+<span class="font-body-md">Tasks</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors rounded" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-body-md">Calendar</span>
+</a>
+</nav>
+<div class="mt-auto px-4 space-y-4">
+<button class="w-full bg-primary text-on-primary py-3 rounded font-bold transition-all active:opacity-80 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">mic</span>
+                Start Recording
+            </button>
+<a class="flex items-center gap-3 py-3 text-on-surface-variant dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-colors rounded" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+<div class="flex items-center gap-3 py-4 border-t border-outline-variant">
+<img class="w-10 h-10 rounded-full border border-outline-variant" data-alt="A professional executive headshot of a person in high-stakes corporate environment, soft lighting, minimalist background, crisp resolution, business professional attire." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIoMlr5CNTN12cku06tbrPIsyDxs6bWBM7wnA3006DRbSMT55IXL6-5MTpdHkD6nGYbCZXPR_QBi8bLvMpw3A44ITHV7pxmJm68GW1oX9f4PPl2oUY51HhHVC5dpx_NypebrlbhcO-tblHiyfBgsGnX3InyEobjbyk2X_BxXRJNoLVHo7XgfvT6armf7BrfCVHjQS9unQjZ6Gef96MTIoDVogN9J1iJmvwe57ZURPq22mpyrIU_-MUcXykb17IgFh0Ps4QCVeYHaz0"/>
+<div>
+<p class="font-bold text-on-surface text-xs">Alexander Chen</p>
+<p class="text-on-surface-variant text-[10px]">VP Engineering</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Wrapper -->
+<div class="flex flex-col flex-1 ml-[280px]">
+<!-- TopAppBar (The Bridge) -->
+<header class="h-16 w-full flex items-center justify-between px-margin-desktop bg-background dark:bg-on-tertiary-fixed border-b border-outline-variant dark:border-outline sticky top-0 z-40">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-on-surface dark:text-surface-bright">Kefir</span>
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+<input class="w-full pl-10 pr-4 py-1.5 bg-surface-container-low border border-outline-variant rounded focus:outline-none focus:ring-1 focus:ring-primary text-body-md" placeholder="Search meeting intelligence..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-on-surface-variant">
+<span class="material-symbols-outlined hover:text-primary cursor-pointer">notifications</span>
+<span class="material-symbols-outlined hover:text-primary cursor-pointer">help</span>
+<span class="material-symbols-outlined hover:text-primary cursor-pointer">account_circle</span>
+</div>
+<button class="bg-primary text-on-primary px-4 py-1.5 rounded text-label-mono uppercase transition-all active:opacity-80">
+                    Create New
+                </button>
+</div>
+</header>
+<!-- Workspace Content (The Canvas) -->
+<main class="flex flex-1 overflow-hidden">
+<!-- LEFT PANEL: Meeting Context -->
+<section class="w-72 border-r border-outline-variant bg-surface flex flex-col overflow-y-auto custom-scrollbar">
+<div class="p-6 space-y-8">
+<!-- Project Title -->
+<div>
+<p class="font-label-mono text-primary uppercase mb-2">Workspace</p>
+<h2 class="font-headline-md text-headline-md text-on-surface">Project Atlas</h2>
+<p class="text-on-surface-variant text-body-md mt-1">Phase 2: Architecture Review</p>
+</div>
+<!-- Participants -->
+<div>
+<h3 class="font-label-mono text-on-surface-variant uppercase text-xs font-bold mb-3">Participants</h3>
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-xs">AC</div>
+<span class="text-body-md">Alex Chen (Host)</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs">SL</div>
+<span class="text-body-md">Sarah Loomis</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container font-bold text-xs">MK</div>
+<span class="text-body-md">Marcus Knight</span>
+</div>
+</div>
+</div>
+<!-- Agenda Checklist -->
+<div>
+<h3 class="font-label-mono text-on-surface-variant uppercase text-xs font-bold mb-3">Agenda</h3>
+<ul class="space-y-3">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">check_box</span>
+<span class="text-body-md text-on-surface-variant line-through">Recap from previous sync</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 0;">check_box_outline_blank</span>
+<span class="text-body-md">Database schema proposals</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 0;">check_box_outline_blank</span>
+<span class="text-body-md">Latency benchmarks review</span>
+</li>
+</ul>
+</div>
+<!-- Linked Documents -->
+<div>
+<h3 class="font-label-mono text-on-surface-variant uppercase text-xs font-bold mb-3">Linked Documents</h3>
+<div class="space-y-2">
+<a class="flex items-center gap-2 p-2 bg-surface-container-low border border-outline-variant rounded hover:border-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">description</span>
+<span class="text-body-md truncate">PRD_Atlas_V2.pdf</span>
+</a>
+<a class="flex items-center gap-2 p-2 bg-surface-container-low border border-outline-variant rounded hover:border-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">schema</span>
+<span class="text-body-md truncate">System_Spec_Final.json</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- CENTER PANEL: Live Meeting Area -->
+<section class="flex-1 flex flex-col bg-background relative overflow-hidden">
+<!-- Recording Header -->
+<div class="flex items-center justify-between px-8 py-4 border-b border-outline-variant bg-surface/50 backdrop-blur-sm sticky top-0 z-10">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1.5 px-3 py-1 bg-error-container text-on-error-container rounded-full text-xs font-bold">
+<span class="w-2 h-2 rounded-full bg-error recording-pulse"></span>
+                            RECORDING
+                        </div>
+<span class="text-on-surface-variant text-xs font-label-mono">00:42:18</span>
+</div>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container rounded transition-colors" title="Pause">
+<span class="material-symbols-outlined">pause_circle</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded transition-colors text-error" title="Stop">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">stop_circle</span>
+</button>
+</div>
+</div>
+<!-- Live Transcript Area -->
+<div class="flex-1 overflow-y-auto p-8 space-y-8 custom-scrollbar">
+<!-- Speaker Entry -->
+<div class="max-w-2xl mx-auto space-y-1 group">
+<div class="flex items-baseline justify-between mb-1">
+<span class="font-bold text-primary font-body-md">Sarah Loomis</span>
+<span class="text-on-surface-variant font-timestamp text-xs">10:41:02 AM</span>
+</div>
+<p class="font-transcript-text text-on-surface text-transcript-text leading-relaxed">
+                            I've been looking at the PostgreSQL configuration for the primary cluster. If we move to a partitioned approach now, we can avoid the re-indexing bottleneck we hit last quarter.
+                        </p>
+</div>
+<!-- Speaker Entry -->
+<div class="max-w-2xl mx-auto space-y-1 group">
+<div class="flex items-baseline justify-between mb-1">
+<span class="font-bold text-tertiary-container font-body-md">Marcus Knight</span>
+<span class="text-on-surface-variant font-timestamp text-xs">10:41:25 AM</span>
+</div>
+<p class="font-transcript-text text-on-surface text-transcript-text leading-relaxed">
+                            That makes sense, Sarah. But what's the projected latency impact on the real-time ingest pipeline? We can't afford more than a 20ms drift.
+                        </p>
+</div>
+<!-- Speaker Entry (Active Recording) -->
+<div class="max-w-2xl mx-auto space-y-1">
+<div class="flex items-baseline justify-between mb-1">
+<span class="font-bold text-primary-container font-body-md">Alex Chen</span>
+<span class="text-on-surface-variant font-timestamp text-xs">10:42:05 AM</span>
+</div>
+<p class="font-transcript-text text-on-surface text-transcript-text leading-relaxed opacity-70 animate-pulse">Let's pull up the latest benchmarks from the staging environment... I recall seeing.</p>
+</div>
+</div>
+<!-- Bottom Quick Notes -->
+<div class="border-t border-outline-variant bg-surface p-6">
+<div class="max-w-2xl mx-auto">
+<div class="flex items-center gap-2 mb-4"><div class="flex items-center justify-between w-full"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">edit_note</span><h4 class="font-headline-md text-sm uppercase tracking-widest font-bold text-on-surface">Quick Notes</h4></div><button class="flex items-center gap-1 text-[10px] font-bold uppercase tracking-tighter text-primary hover:bg-primary-fixed/30 px-2 py-1 rounded transition-colors"><span class="material-symbols-outlined text-sm">fullscreen</span>Focus Mode</button></div></div>
+<div class="space-y-3 mb-4 max-h-32 overflow-y-auto pr-2 custom-scrollbar bg-surface-container-lowest p-4 rounded border border-outline-variant/50 shadow-sm"><div class="flex items-center justify-between group border-b border-outline-variant/30 pb-2"><div class="flex gap-4 text-body-md items-baseline"><span class="text-primary font-label-mono text-[11px] font-bold shrink-0">10:38</span><p class="text-on-surface italic">Agreed on moving to AWS Aurora in Q3.</p></div><div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined text-sm cursor-pointer hover:text-primary">push_pin</span><span class="material-symbols-outlined text-sm cursor-pointer hover:text-primary">task_alt</span><span class="material-symbols-outlined text-sm cursor-pointer hover:text-primary">priority_high</span></div></div><div class="flex items-center justify-between group border-b border-outline-variant/30 pb-2"><div class="flex gap-4 text-body-md items-baseline"><span class="text-primary font-label-mono text-[11px] font-bold shrink-0">10:40</span><p class="text-on-surface italic">Sarah will draft the partitioning schema by Friday.</p></div><div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined text-sm cursor-pointer hover:text-primary">push_pin</span><span class="material-symbols-outlined text-sm cursor-pointer hover:text-primary">task_alt</span><span class="material-symbols-outlined text-sm cursor-pointer hover:text-primary">priority_high</span></div></div></div>
+<div class="relative">
+<input class="w-full bg-background border-b border-outline-variant py-2 focus:outline-none focus:border-primary transition-all text-body-md italic text-sm" placeholder="Type a quick note..." type="text"/>
+<button class="absolute right-0 top-1/2 -translate-y-1/2 text-primary-container hover:text-primary font-bold text-xs uppercase tracking-wider">Add Note</button>
+</div>
+</div>
+</div>
+</section>
+<!-- RIGHT PANEL: AI Insights -->
+<section class="w-80 border-l border-outline-variant bg-surface-container-lowest flex flex-col overflow-y-auto custom-scrollbar">
+<div class="p-6">
+<div class="flex items-center gap-2 mb-8">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<h2 class="font-headline-md text-[18px] text-on-surface font-bold">AI Insights</h2>
+</div>
+<!-- Key Decisions -->
+<div class="mb-10">
+<h3 class="font-label-mono text-primary uppercase text-xs font-bold mb-4 border-b border-outline-variant pb-2">Key Decisions</h3>
+<div class="space-y-4">
+<div class="p-3 bg-primary-fixed/30 border-l-4 border-primary rounded-r">
+<p class="text-body-md font-medium text-on-surface">Adopt PostgreSQL Partitioning</p>
+<p class="text-[11px] text-on-surface-variant mt-1 italic">Agreed by Sarah, Alex, Marcus</p>
+</div>
+<div class="p-3 bg-surface-container rounded border border-outline-variant">
+<p class="text-body-md font-medium text-on-surface">Cloud Provider Retention</p>
+<p class="text-[11px] text-on-surface-variant mt-1">Remain on AWS for Infrastructure v2</p>
+</div>
+</div>
+</div>
+<!-- Action Items -->
+<div class="mb-10">
+<h3 class="font-label-mono text-secondary uppercase text-xs font-bold mb-4 border-b border-outline-variant pb-2">Action Items</h3>
+<div class="space-y-3">
+<div class="flex gap-3 items-start">
+<span class="material-symbols-outlined text-on-secondary-container text-lg mt-0.5">assignment</span>
+<div>
+<p class="text-body-md text-on-surface">Draft partitioning schema</p>
+<p class="text-[11px] font-bold text-primary">Sarah Loomis • Friday</p>
+</div>
+</div>
+<div class="flex gap-3 items-start">
+<span class="material-symbols-outlined text-on-secondary-container text-lg mt-0.5">assignment</span>
+<div>
+<p class="text-body-md text-on-surface">Run latency benchmarks</p>
+<p class="text-[11px] font-bold text-primary">Marcus Knight • Monday</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Risks -->
+<div class="mb-10">
+<h3 class="font-label-mono text-error uppercase text-xs font-bold mb-4 border-b border-outline-variant pb-2">Risks Identified</h3>
+<div class="space-y-3">
+<div class="flex gap-3 items-start">
+<span class="material-symbols-outlined text-error text-lg mt-0.5">warning</span>
+<p class="text-body-md text-on-surface">20ms drift threshold may be exceeded during migration phase.</p>
+</div>
+</div>
+</div>
+<!-- Unanswered Questions -->
+<div>
+<h3 class="font-label-mono text-tertiary uppercase text-xs font-bold mb-4 border-b border-outline-variant pb-2">Questions</h3>
+<div class="space-y-3">
+<div class="flex gap-3 items-start">
+<span class="material-symbols-outlined text-on-tertiary-fixed-variant text-lg mt-0.5">help_outline</span>
+<p class="text-body-md text-on-surface italic">"How does this affect the legacy reporting engine?"</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Floating Action State (Contextual) -->
+<div class="fixed bottom-8 right-10 z-[60]">
+<button class="bg-primary text-on-primary w-14 h-14 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform active:scale-95 group">
+<span class="material-symbols-outlined text-2xl group-hover:rotate-12 transition-transform">add_comment</span>
+</button>
+</div>
+<script>
+        // Micro-interaction for transcript scrolling
+        const transcriptArea = document.querySelector('.flex-1.overflow-y-auto');
+        if (transcriptArea) {
+            transcriptArea.scrollTop = transcriptArea.scrollHeight;
+        }
+
+        // Simulating live recording dots
+        const transcriptLines = document.querySelectorAll('.font-transcript-text');
+        setInterval(() => {
+            const activeLine = document.querySelector('.animate-pulse');
+            if (activeLine) {
+                const currentText = activeLine.innerText;
+                if (currentText.endsWith('...')) {
+                    activeLine.innerText = currentText.slice(0, -3);
+                } else {
+                    activeLine.innerText += '.';
+                }
+            }
+        }, 1000);
+    </script>
+</body></html>

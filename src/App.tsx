@@ -1,19 +1,21 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
-import RecordingPanel from "./components/RecordingPanel";
-import TranscriptPanel from "./components/TranscriptPanel";
-import NotePad, { type Note } from "./components/NotePad";
-import SummaryPanel from "./components/SummaryPanel";
-import SettingsModal, { type Settings } from "./components/SettingsModal";
-import type { TranscriptEntry, RecordingStatus } from "./types";
+import Sidebar, { type View } from "./components/Sidebar";
+import Dashboard from "./components/Dashboard";
+import MeetingView from "./components/MeetingView";
+import SettingsPage from "./components/SettingsPage";
+import type { Note } from "./components/NotePad";
+import type { TranscriptEntry, RecordingStatus, Settings } from "./types";
 
 function loadSettings(): Settings {
   return {
-    provider:     (localStorage.getItem("kefir_provider") as Settings["provider"]) ?? "anthropic",
-    anthropicKey: localStorage.getItem("kefir_api_key")    ?? "",
-    openAiKey:    localStorage.getItem("kefir_openai_key") ?? "",
-    whisperModel: localStorage.getItem("kefir_whisper")    ?? "base",
+    provider:     (localStorage.getItem("kefir_provider")     as Settings["provider"])    ?? "anthropic",
+    anthropicKey: localStorage.getItem("kefir_api_key")       ?? "",
+    openAiKey:    localStorage.getItem("kefir_openai_key")    ?? "",
+    asrProvider:  (localStorage.getItem("kefir_asr_provider") as Settings["asrProvider"]) ?? "local",
+    deepgramKey:  localStorage.getItem("kefir_deepgram_key")  ?? "",
+    whisperModel: localStorage.getItem("kefir_whisper")       ?? "base",
   };
 }
 
@@ -24,16 +26,77 @@ function fmtTime(ms: number) {
   return `${String(h).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 }
 
+function NotesView({ notes }: { notes: Note[] }) {
+  return (
+    <div className="dashboard">
+      <div className="dash-greeting">
+        <h1>Session Notes</h1>
+        <p>Timestamped highlights captured during your last recording.</p>
+      </div>
+
+      {notes.length === 0 ? (
+        <div style={{
+          background: "var(--s1)", border: "1px solid var(--bdr)", borderRadius: "var(--r-l)",
+          padding: "40px 32px", textAlign: "center",
+        }}>
+          <div style={{ fontSize: 32, marginBottom: 12 }}>📝</div>
+          <div style={{ fontSize: 14, fontWeight: 600, color: "var(--tx2)", marginBottom: 6 }}>No notes yet</div>
+          <div style={{ fontSize: 12, color: "var(--tx3)", lineHeight: 1.65 }}>
+            Start a meeting and stamp highlights during recording.<br />
+            They'll appear here with timestamps.
+          </div>
+        </div>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          {notes.map((n, i) => (
+            <div key={n.id} style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 16,
+              background: "var(--s1)",
+              border: "1px solid var(--bdr)",
+              borderLeft: "3px solid var(--orange-40)",
+              borderRadius: "var(--r-m)",
+              padding: "12px 16px",
+              transition: "border-color 0.15s",
+            }}
+              onMouseEnter={(e) => (e.currentTarget.style.borderLeftColor = "var(--orange)")}
+              onMouseLeave={(e) => (e.currentTarget.style.borderLeftColor = "var(--orange-40)")}
+            >
+              <div style={{
+                fontFamily: "var(--mono)", fontSize: 11, color: "var(--orange)",
+                flexShrink: 0, paddingTop: 2, fontVariantNumeric: "tabular-nums",
+              }}>
+                {n.timestamp}
+              </div>
+              <div style={{ fontSize: 13.5, color: "var(--tx1)", lineHeight: 1.6 }}>
+                {n.text}
+              </div>
+              <div style={{
+                marginLeft: "auto", fontSize: 10.5, color: "var(--tx3)",
+                flexShrink: 0, paddingTop: 2,
+              }}>
+                #{i + 1}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function App() {
-  const [isRecording, setIsRecording]     = useState(false);
-  const [transcript, setTranscript]       = useState<TranscriptEntry[]>([]);
-  const [notes, setNotes]                 = useState<Note[]>([]);
-  const [summary, setSummary]             = useState("");
-  const [isSummarizing, setIsSummarizing] = useState(false);
-  const [status, setStatus]               = useState<RecordingStatus>({ phase: "idle", message: "Ready" });
-  const [showSettings, setShowSettings]   = useState(false);
-  const [settings, setSettings]           = useState<Settings>(loadSettings);
-  const [elapsedMs, setElapsedMs]         = useState(0);
+  const [activeView,    setActiveView]    = useState<View>("dashboard");
+  const [sidebarOpen,  setSidebarOpen]   = useState(true);
+  const [isRecording,  setIsRecording]   = useState(false);
+  const [transcript,   setTranscript]    = useState<TranscriptEntry[]>([]);
+  const [notes,        setNotes]         = useState<Note[]>([]);
+  const [summary,      setSummary]       = useState("");
+  const [isSummarizing,setIsSummarizing] = useState(false);
+  const [status,       setStatus]        = useState<RecordingStatus>({ phase: "idle", message: "Ready" });
+  const [settings,     setSettings]      = useState<Settings>(loadSettings);
+  const [elapsedMs,    setElapsedMs]     = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // ── Tauri event listeners ─────────────────────────────────
@@ -48,7 +111,7 @@ export default function App() {
     return () => { unT.then((f) => f()); unS.then((f) => f()); };
   }, []);
 
-  // ── Timer helpers ─────────────────────────────────────────
+  // ── Timer ─────────────────────────────────────────────────
   const startTimer = useCallback(() => {
     setElapsedMs(0);
     timerRef.current = setInterval(() => setElapsedMs((ms) => ms + 1000), 1000);
@@ -60,19 +123,23 @@ export default function App() {
 
   const elapsed = fmtTime(elapsedMs);
 
-  // ── Recording controls ────────────────────────────────────
+  // ── Recording ─────────────────────────────────────────────
   const handleStart = useCallback(async () => {
     try {
       setTranscript([]);
       setSummary("");
-      await invoke("start_recording");
+      await invoke("start_recording", {
+        asrProvider: settings.asrProvider,
+        deepgramKey: settings.deepgramKey,
+      });
       setIsRecording(true);
       startTimer();
       setStatus({ phase: "recording", message: "Recording..." });
+      setActiveView("meeting");
     } catch (e) {
       setStatus({ phase: "error", message: `Start failed: ${e}` });
     }
-  }, [startTimer]);
+  }, [startTimer, settings]);
 
   const handleStop = useCallback(async () => {
     try {
@@ -94,17 +161,14 @@ export default function App() {
   const activeKey = settings.provider === "anthropic" ? settings.anthropicKey : settings.openAiKey;
 
   const handleSummarize = useCallback(async () => {
-    if (!activeKey) { setShowSettings(true); return; }
+    if (!activeKey) { setActiveView("settings"); return; }
     if (transcript.length === 0) return;
     setIsSummarizing(true);
     try {
       const transcriptText = transcript
         .map((e) => `[${e.timestamp}] [${e.speaker}${e.speakerLabel ? ` (${e.speakerLabel})` : ""}]: ${e.text}`)
         .join("\n");
-
-      // Format user notes the same way — injected as "what I found important"
       const formattedNotes = notes.map((n) => `[${n.timestamp}] ${n.text}`);
-
       const result = await invoke<string>("summarize_transcript", {
         transcript:  transcriptText,
         apiKey:      activeKey,
@@ -118,74 +182,70 @@ export default function App() {
     } finally {
       setIsSummarizing(false);
     }
-  }, [transcript, notes, activeKey, settings.provider, settings.whisperModel]);
+  }, [transcript, notes, activeKey, settings]);
 
-  // ── Settings ──────────────────────────────────────────────
+  // ── Settings save ──────────────────────────────────────────
   const handleSettingsSave = useCallback((s: Settings) => {
-    localStorage.setItem("kefir_provider",   s.provider);
-    localStorage.setItem("kefir_api_key",    s.anthropicKey);
-    localStorage.setItem("kefir_openai_key", s.openAiKey);
-    localStorage.setItem("kefir_whisper",    s.whisperModel);
+    localStorage.setItem("kefir_provider",     s.provider);
+    localStorage.setItem("kefir_api_key",      s.anthropicKey);
+    localStorage.setItem("kefir_openai_key",   s.openAiKey);
+    localStorage.setItem("kefir_asr_provider", s.asrProvider);
+    localStorage.setItem("kefir_deepgram_key", s.deepgramKey);
+    localStorage.setItem("kefir_whisper",      s.whisperModel);
     setSettings(s);
-    setShowSettings(false);
   }, []);
 
-  const providerLabel = settings.provider === "anthropic" ? "Claude" : "GPT";
+  const isProcessing = status.phase === "processing";
 
   return (
     <div className="app">
-      <header className="app-header">
-        <div className="brand">
-          <div className="brand-icon" />
-          <span className="brand-name">Kefir</span>
-          <span className="brand-sub">AI Meeting Notetaker</span>
-        </div>
+      <Sidebar
+        activeView={activeView}
+        expanded={sidebarOpen}
+        isRecording={isRecording}
+        onNavigate={setActiveView}
+        onToggle={() => setSidebarOpen((v) => !v)}
+      />
 
-        <RecordingPanel
-          isRecording={isRecording}
-          elapsed={isRecording ? elapsed : undefined}
-          onStart={handleStart}
-          onStop={handleStop}
-        />
+      <div className="app-content">
+        {activeView === "dashboard" && (
+          <Dashboard
+            status={status}
+            transcript={transcript}
+            notes={notes}
+            elapsed={elapsed}
+            settings={settings}
+            onStartMeeting={() => { setActiveView("meeting"); }}
+          />
+        )}
 
-        <div className="header-right">
-          {activeKey && <span className="provider-badge">{providerLabel}</span>}
-          <span className={`status-pill status-pill--${status.phase}`}>{status.message}</span>
-          <button className="icon-btn" onClick={() => setShowSettings(true)} title="Settings">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="3" />
-              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
-            </svg>
-          </button>
-        </div>
-      </header>
+        {activeView === "meeting" && (
+          <MeetingView
+            isRecording={isRecording}
+            isProcessing={isProcessing}
+            isSummarizing={isSummarizing}
+            transcript={transcript}
+            notes={notes}
+            summary={summary}
+            elapsed={elapsed}
+            status={status}
+            settings={settings}
+            onStart={handleStart}
+            onStop={handleStop}
+            onAddNote={handleAddNote}
+            onClearNotes={handleClrNotes}
+            onSummarize={handleSummarize}
+          />
+        )}
 
-      <main className="app-body">
-        <TranscriptPanel entries={transcript} isRecording={isRecording} />
-        <NotePad
-          notes={notes}
-          isRecording={isRecording}
-          elapsed={elapsed}
-          onAdd={handleAddNote}
-          onClear={handleClrNotes}
-        />
-        <SummaryPanel
-          summary={summary}
-          isSummarizing={isSummarizing}
-          canSummarize={transcript.length > 0 && !isRecording && !isSummarizing}
-          hasApiKey={!!activeKey}
-          providerLabel={providerLabel}
-          onSummarize={handleSummarize}
-        />
-      </main>
+        {activeView === "notes" && (
+          <NotesView notes={notes} />
+        )}
 
-      {showSettings && (
-        <SettingsModal
-          current={settings}
-          onSave={handleSettingsSave}
-          onClose={() => setShowSettings(false)}
-        />
-      )}
+        {activeView === "settings" && (
+          <SettingsPage current={settings} onSave={handleSettingsSave} />
+        )}
+      </div>
     </div>
   );
 }

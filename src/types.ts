@@ -12,3 +12,12 @@ export interface RecordingStatus {
   phase: "idle" | "recording" | "processing" | "done" | "error";
   message: string;
 }
+
+export interface Settings {
+  provider:     "anthropic" | "openai";
+  anthropicKey: string;
+  openAiKey:    string;
+  asrProvider:  "local" | "deepgram";
+  deepgramKey:  string;
+  whisperModel: string;
+}

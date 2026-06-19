@@ -1,11 +1,7 @@
 import { useState } from "react";
+import type { Settings } from "../types";
 
-export interface Settings {
-  provider:     "anthropic" | "openai";
-  anthropicKey: string;
-  openAiKey:    string;
-  whisperModel: string;
-}
+export type { Settings };
 
 interface Props {
   current:  Settings;
@@ -17,6 +13,7 @@ export default function SettingsModal({ current, onSave, onClose }: Props) {
   const [s, setS]             = useState<Settings>(current);
   const [showAnt, setShowAnt] = useState(false);
   const [showOai, setShowOai] = useState(false);
+  const [showDg,  setShowDg]  = useState(false);
 
   const set = (patch: Partial<Settings>) => setS((prev) => ({ ...prev, ...patch }));
 
@@ -103,21 +100,65 @@ export default function SettingsModal({ current, onSave, onClose }: Props) {
             </>
           )}
 
-          {/* ── Whisper model (always shown) ── */}
-          <label className="field-label" style={{ marginTop: "1.5rem" }}>
-            Transcription Model (Whisper)
-          </label>
-          <select
-            className="key-input"
-            value={s.whisperModel.startsWith("gpt") ? "base" : s.whisperModel}
-            onChange={(e) => set({ whisperModel: e.target.value })}
-          >
-            <option value="tiny">Tiny — fastest, least accurate</option>
-            <option value="base">Base — recommended</option>
-            <option value="small">Small — more accurate, slower</option>
-            <option value="medium">Medium — most accurate, slowest</option>
-          </select>
-          <p className="field-hint">Runs locally via faster-whisper. Larger = slower first run.</p>
+          {/* ── ASR provider ── */}
+          <div className="settings-divider" />
+          <label className="field-label">Transcription (ASR) Provider</label>
+          <div className="provider-row">
+            {(["local", "deepgram"] as const).map((p) => (
+              <button
+                key={p}
+                className={`provider-btn ${s.asrProvider === p ? "provider-btn--active" : ""}`}
+                onClick={() => set({ asrProvider: p })}
+              >
+                {p === "local" ? "Local Whisper" : "Deepgram (live)"}
+              </button>
+            ))}
+          </div>
+
+          {s.asrProvider === "deepgram" && (
+            <>
+              <label className="field-label" style={{ marginTop: "1rem" }}>
+                Deepgram API Key
+              </label>
+              <div className="key-row">
+                <input
+                  type={showDg ? "text" : "password"}
+                  className="key-input"
+                  value={s.deepgramKey}
+                  onChange={(e) => set({ deepgramKey: e.target.value })}
+                  placeholder="Enter Deepgram API key..."
+                />
+                <button className="icon-btn" onClick={() => setShowDg((v) => !v)}>
+                  {showDg ? "Hide" : "Show"}
+                </button>
+              </div>
+              <p className="field-hint">
+                Real-time streaming — transcript appears <em>during</em> the meeting.
+                Audio never touches disk. Get a key at deepgram.com.
+              </p>
+            </>
+          )}
+
+          {s.asrProvider === "local" && (
+            <>
+              <label className="field-label" style={{ marginTop: "1rem" }}>
+                Whisper Model
+              </label>
+              <select
+                className="key-input"
+                value={s.whisperModel}
+                onChange={(e) => set({ whisperModel: e.target.value })}
+              >
+                <option value="tiny">Tiny — fastest, least accurate</option>
+                <option value="base">Base — recommended</option>
+                <option value="small">Small — more accurate, slower</option>
+                <option value="medium">Medium — most accurate, slowest</option>
+              </select>
+              <p className="field-hint">
+                Post-call processing. Runs fully offline via faster-whisper.
+              </p>
+            </>
+          )}
         </div>
 
         <div className="modal-footer">

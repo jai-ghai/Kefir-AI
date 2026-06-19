@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Meeting Intelligence - Notification Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#e0e3e5",
+                        "on-secondary-fixed-variant": "#3f465c",
+                        "on-error": "#ffffff",
+                        "secondary": "#565e74",
+                        "tertiary-fixed": "#d3e4fe",
+                        "on-primary-fixed": "#00174b",
+                        "outline-variant": "#c3c6d7",
+                        "on-secondary-fixed": "#131b2e",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container": "#eceef0",
+                        "secondary-fixed-dim": "#bec6e0",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-tint": "#0053db",
+                        "on-surface": "#191c1e",
+                        "inverse-surface": "#2d3133",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "surface-bright": "#f7f9fb",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#2563eb",
+                        "outline": "#737686",
+                        "inverse-primary": "#b4c5ff",
+                        "on-secondary-container": "#5c647a",
+                        "surface-container-highest": "#e0e3e5",
+                        "background": "#f7f9fb",
+                        "on-tertiary-container": "#e9f0ff",
+                        "surface-dim": "#d8dadc",
+                        "primary": "#004ac6",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "on-primary-container": "#eeefff",
+                        "tertiary-container": "#5e6e85",
+                        "tertiary": "#46566c",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary-fixed": "#dae2fd",
+                        "on-surface-variant": "#434655",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#191c1e",
+                        "surface-container-low": "#f2f4f6",
+                        "secondary-container": "#dae2fd",
+                        "surface": "#f7f9fb",
+                        "surface-container-high": "#e6e8ea"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "margin-desktop": "40px",
+                        "sidebar-width": "280px",
+                        "gutter": "24px",
+                        "content-max-width": "1200px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "timestamp": ["Geist"],
+                        "label-mono": ["Geist"],
+                        "headline-md": ["Inter"],
+                        "transcript-text": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "timestamp": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "label-mono": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "transcript-text": ["15px", {"lineHeight": "26px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .toggle-switch:checked + .toggle-bg {
+            background-color: #004ac6;
+        }
+        .toggle-switch:checked + .toggle-bg .toggle-dot {
+            transform: translateX(100%);
+        }
+        body {
+            background-color: #f7f9fb;
+            font-family: 'Inter', sans-serif;
+            color: #191c1e;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex">
+<!-- SideNavBar Component -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface border-r border-outline-variant flex flex-col py-margin-desktop px-4 z-50">
+<div class="mb-10 px-4">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">MeetingMind</h1>
+<p class="text-on-surface-variant font-body-md text-body-md opacity-70">Enterprise Intelligence</p>
+</div>
+<nav class="flex-grow space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 font-body-md text-body-md transition-colors hover:bg-surface-container-high text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">home</span>
+                Home
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 font-body-md text-body-md transition-colors hover:bg-surface-container-high text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">folder</span>
+                Projects
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 font-body-md text-body-md transition-colors hover:bg-surface-container-high text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">video_chat</span>
+                Meetings
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 font-body-md text-body-md transition-colors hover:bg-surface-container-high text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">database</span>
+                Knowledge
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 font-body-md text-body-md transition-colors hover:bg-surface-container-high text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">check_circle</span>
+                Tasks
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 font-body-md text-body-md transition-colors hover:bg-surface-container-high text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+                Calendar
+            </a>
+<!-- Active Tab: Settings (Mapping to Notifications requirement) -->
+<a class="flex items-center gap-3 px-4 py-3 font-body-md text-body-md text-primary font-bold border-r-2 border-primary bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+                Settings
+            </a>
+</nav>
+<div class="mt-auto px-4">
+<button class="w-full bg-primary text-on-primary py-3 px-4 rounded font-body-md font-bold transition-all hover:opacity-90 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">add_circle</span>
+                Start Recording
+            </button>
+<div class="mt-6 flex items-center gap-3 p-2">
+<img class="w-10 h-10 rounded-full object-cover grayscale" data-alt="A professional headshot of a female executive in a modern office, soft natural lighting, high resolution, minimalist aesthetic, professional atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJUoI-GPONvOdLkFHCsSdblPBFC5_-2EITvJZGr6SOf1RWvmyF8HV2WtOBswXeporm6GWs_7WZdiXi3FBpaFfvI2z901_PuXAgOpuV37nNEOJ2Fk9DJh3njp1--LeV9M9x6R6JXytnUE8loJ8Kk9RfTv4X-yAeki8ZnOY6jsaoWLw15a2ALlmMPsHErk166BHaksR7-VOTEx2Q05ngeVTOtw_3ygsUEAhk74wtRRxtgGCHBYom6wL6mGzxAOsL3n3XMQiDOKaK05nk"/>
+<div class="overflow-hidden">
+<p class="text-body-md font-bold truncate">Alex Rivera</p>
+<p class="text-label-mono text-on-surface-variant truncate">Product Lead</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-grow ml-[280px]">
+<!-- TopAppBar Component -->
+<header class="flex justify-between items-center w-full px-margin-desktop h-16 sticky top-0 z-40 bg-background border-b border-outline-variant">
+<div class="flex items-center gap-4 flex-grow">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg pl-10 pr-4 py-1.5 font-body-md focus:ring-2 focus:ring-primary focus:outline-none" placeholder="Search across intelligence..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-on-surface-variant">
+<span class="material-symbols-outlined hover:text-primary cursor-pointer">notifications</span>
+<span class="material-symbols-outlined hover:text-primary cursor-pointer">help</span>
+<span class="material-symbols-outlined hover:text-primary cursor-pointer">account_circle</span>
+</div>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded font-label-mono uppercase tracking-wider text-sm font-bold">
+                    Create New
+                </button>
+</div>
+</header>
+<!-- Settings Content -->
+<div class="max-w-[1200px] mx-auto py-10 px-margin-desktop">
+<!-- Header Section -->
+<div class="mb-10 flex items-end justify-between">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Notification Settings</h2>
+<p class="text-body-lg text-secondary">Configure how and when Meeting Intelligence keeps you informed.</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 border border-outline-variant text-secondary font-body-md rounded hover:bg-surface-container transition-colors">Discard Changes</button>
+<button class="px-4 py-2 bg-primary text-on-primary font-body-md font-bold rounded hover:opacity-90 transition-opacity">Save Preferences</button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Settings Categories -->
+<div class="lg:col-span-3 space-y-2">
+<a class="block px-4 py-2 rounded font-body-md text-on-surface-variant hover:bg-surface-container" href="#">Profile Information</a>
+<a class="block px-4 py-2 rounded font-body-md bg-surface-container-high text-primary font-bold" href="#">Notifications</a>
+<a class="block px-4 py-2 rounded font-body-md text-on-surface-variant hover:bg-surface-container" href="#">Security & Privacy</a>
+<a class="block px-4 py-2 rounded font-body-md text-on-surface-variant hover:bg-surface-container" href="#">Integrations</a>
+<a class="block px-4 py-2 rounded font-body-md text-on-surface-variant hover:bg-surface-container" href="#">Billing</a>
+</div>
+<!-- Right Column: Settings Form -->
+<div class="lg:col-span-9 space-y-8">
+<!-- Email Notifications Section -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg p-8">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">mail</span>
+<h3 class="font-headline-md text-headline-md">Email Notifications</h3>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div>
+<p class="font-body-md font-bold text-on-surface">Meeting summaries</p>
+<p class="text-body-md text-on-surface-variant opacity-70">Receive AI-generated recaps after each session.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant rounded-full transition-colors toggle-bg flex items-center px-1">
+<div class="w-4 h-4 bg-white rounded-full transition-transform toggle-dot"></div>
+</div>
+</label>
+</div>
+<div class="h-px bg-outline-variant opacity-30"></div>
+<div class="flex items-center justify-between">
+<div>
+<p class="font-body-md font-bold text-on-surface">Action items assigned</p>
+<p class="text-body-md text-on-surface-variant opacity-70">Get notified when someone tags you in a task.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant rounded-full transition-colors toggle-bg flex items-center px-1">
+<div class="w-4 h-4 bg-white rounded-full transition-transform toggle-dot"></div>
+</div>
+</label>
+</div>
+<div class="h-px bg-outline-variant opacity-30"></div>
+<div class="flex items-center justify-between">
+<div>
+<p class="font-body-md font-bold text-on-surface">New project insights</p>
+<p class="text-body-md text-on-surface-variant opacity-70">Weekly reports on knowledge graph updates.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only toggle-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant rounded-full transition-colors toggle-bg flex items-center px-1">
+<div class="w-4 h-4 bg-white rounded-full transition-transform toggle-dot"></div>
+</div>
+</label>
+</div>
+</div>
+</section>
+<!-- Push Notifications Section -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg p-8">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">notifications_active</span>
+<h3 class="font-headline-md text-headline-md">Push Notifications</h3>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div>
+<p class="font-body-md font-bold text-on-surface">Meeting about to start</p>
+<p class="text-body-md text-on-surface-variant opacity-70">5-minute reminders for scheduled syncs.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant rounded-full transition-colors toggle-bg flex items-center px-1">
+<div class="w-4 h-4 bg-white rounded-full transition-transform toggle-dot"></div>
+</div>
+</label>
+</div>
+<div class="h-px bg-outline-variant opacity-30"></div>
+<div class="flex items-center justify-between">
+<div>
+<p class="font-body-md font-bold text-on-surface">Real-time decision alerts</p>
+<p class="text-body-md text-on-surface-variant opacity-70">Instant alerts when critical blockers are flagged.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant rounded-full transition-colors toggle-bg flex items-center px-1">
+<div class="w-4 h-4 bg-white rounded-full transition-transform toggle-dot"></div>
+</div>
+</label>
+</div>
+</div>
+</section>
+<!-- Do Not Disturb Section -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg p-8">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">do_not_disturb_on</span>
+<h3 class="font-headline-md text-headline-md">Do Not Disturb</h3>
+</div>
+<div class="p-6 bg-surface-container-low rounded-lg">
+<p class="font-body-md font-bold mb-4">Focus Hours Schedule</p>
+<div class="flex flex-wrap items-center gap-4">
+<div class="flex-grow">
+<label class="block text-label-mono uppercase text-on-surface-variant mb-1">Start Time</label>
+<select class="w-full bg-white border border-outline-variant rounded px-3 py-2 font-body-md focus:ring-primary focus:border-primary">
+<option>09:00 PM</option>
+<option selected="">10:00 PM</option>
+<option>11:00 PM</option>
+</select>
+</div>
+<div class="flex-grow">
+<label class="block text-label-mono uppercase text-on-surface-variant mb-1">End Time</label>
+<select class="w-full bg-white border border-outline-variant rounded px-3 py-2 font-body-md focus:ring-primary focus:border-primary">
+<option>07:00 AM</option>
+<option selected="">08:00 AM</option>
+<option>09:00 AM</option>
+</select>
+</div>
+<div class="w-full mt-2">
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-primary text-on-primary rounded-full text-label-mono uppercase">Mon</span>
+<span class="px-3 py-1 bg-primary text-on-primary rounded-full text-label-mono uppercase">Tue</span>
+<span class="px-3 py-1 bg-primary text-on-primary rounded-full text-label-mono uppercase">Wed</span>
+<span class="px-3 py-1 bg-primary text-on-primary rounded-full text-label-mono uppercase">Thu</span>
+<span class="px-3 py-1 bg-primary text-on-primary rounded-full text-label-mono uppercase">Fri</span>
+<span class="px-3 py-1 bg-surface-variant text-on-surface-variant rounded-full text-label-mono uppercase">Sat</span>
+<span class="px-3 py-1 bg-surface-variant text-on-surface-variant rounded-full text-label-mono uppercase">Sun</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Integration Status Section -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg p-8">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">hub</span>
+<h3 class="font-headline-md text-headline-md">Integrations</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Slack -->
+<div class="border border-outline-variant rounded p-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface flex items-center justify-center rounded">
+<span class="material-symbols-outlined text-secondary">forum</span>
+</div>
+<div>
+<p class="font-body-md font-bold">Slack</p>
+<div class="flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-green-500"></div>
+<p class="text-label-mono text-on-surface-variant">Connected</p>
+</div>
+</div>
+</div>
+<button class="text-primary font-body-md hover:underline">Configure</button>
+</div>
+<!-- Teams -->
+<div class="border border-outline-variant rounded p-4 flex items-center justify-between">
+<div class="flex items-center gap-4 opacity-50">
+<div class="w-10 h-10 bg-surface flex items-center justify-center rounded">
+<span class="material-symbols-outlined text-secondary">groups</span>
+</div>
+<div>
+<p class="font-body-md font-bold">Microsoft Teams</p>
+<p class="text-label-mono text-on-surface-variant">Not Linked</p>
+</div>
+</div>
+<button class="bg-secondary text-on-secondary px-4 py-1.5 rounded font-body-md hover:opacity-90">Link</button>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Micro-interactions for toggles
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const parent = this.closest('section');
+                // Subtle visual feedback or state logging could go here
+            });
+        });
+
+        // Sticky header transition
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-sm', 'bg-white/80', 'backdrop-blur-md');
+            } else {
+                header.classList.remove('shadow-sm', 'bg-white/80', 'backdrop-blur-md');
+            }
+        });
+    </script>
+</body></html>

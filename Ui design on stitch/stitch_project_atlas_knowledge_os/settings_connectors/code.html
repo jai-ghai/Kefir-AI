@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kefir - Connectors Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "on-secondary-fixed-variant": "#3f465c",
+                    "on-error": "#ffffff",
+                    "secondary": "#565e74",
+                    "tertiary-fixed": "#d3e4fe",
+                    "on-primary-fixed": "#00174b",
+                    "outline-variant": "#c3c6d7",
+                    "on-secondary-fixed": "#131b2e",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "surface-container": "#eceef0",
+                    "secondary-fixed-dim": "#bec6e0",
+                    "primary-fixed": "#dbe1ff",
+                    "surface-tint": "#0053db",
+                    "on-surface": "#191c1e",
+                    "inverse-surface": "#2d3133",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#b7c8e1",
+                    "surface-bright": "#f7f9fb",
+                    "on-tertiary": "#ffffff",
+                    "primary-container": "#2563eb",
+                    "outline": "#737686",
+                    "inverse-primary": "#b4c5ff",
+                    "on-secondary-container": "#5c647a",
+                    "surface-container-highest": "#e0e3e5",
+                    "background": "#f7f9fb",
+                    "on-tertiary-container": "#e9f0ff",
+                    "surface-dim": "#d8dadc",
+                    "primary": "#004ac6",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-tertiary-fixed-variant": "#38485d",
+                    "on-primary-container": "#eeefff",
+                    "tertiary-container": "#5e6e85",
+                    "tertiary": "#46566c",
+                    "on-tertiary-fixed": "#0b1c30",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "inverse-on-surface": "#eff1f3",
+                    "secondary-fixed": "#dae2fd",
+                    "on-surface-variant": "#434655",
+                    "on-secondary": "#ffffff",
+                    "on-background": "#191c1e",
+                    "surface-container-low": "#f2f4f6",
+                    "secondary": "#565e74",
+                    "surface": "#f7f9fb",
+                    "surface-container-high": "#e6e8ea"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "margin-desktop": "40px",
+                    "sidebar-width": "280px",
+                    "gutter": "24px",
+                    "content-max-width": "1200px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "timestamp": ["Geist"],
+                    "label-mono": ["Geist"],
+                    "headline-md": ["Inter"],
+                    "transcript-text": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "timestamp": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "label-mono": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "transcript-text": ["15px", {"lineHeight": "26px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E2E8F0;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #CBD5E1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed antialiased">
+<!-- Sidebar (As specified in JSON & Prompt) -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface border-r border-outline-variant flex flex-col py-margin-desktop px-4 z-40">
+<!-- Logo / Brand Anchor -->
+<div class="mb-8 px-4 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary" style="font-variation-settings: 'FILL' 1;">fluid_med</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">MeetingMind</h1>
+<p class="text-xs text-on-surface-variant tracking-wider uppercase opacity-70">Enterprise Intelligence</p>
+</div>
+</div>
+<!-- User Profile Quick Access -->
+<div class="mb-8 p-3 rounded-xl bg-surface-container-low border border-outline-variant flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="A high-quality professional portrait of a modern tech executive with soft studio lighting. The person has a friendly but authoritative expression, styled with clean, minimalist aesthetics. The background is a soft-focus office environment with neutral tones, perfectly aligned with the high-utility minimalism of the MeetingMind platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVi-NxIQNybw9UU7Pv0iaizufQEpnhVXSsP1i7_ExrByFEfMGRBJQsGmxKOsK4zs59YgkfkafLMGBesRiCNaUqjSmRqKc1SUUZQXpc_AgPovICauF8qz4aEi7sLjoIvOcY02qauyUAKowQpfua6MNE92ahRC9NbFIgo2cefAk4f43s0QbHz4RU0PAMDXHqlg1VCqMYVTMZM6NI5hgoMa12SfUdCsFfxiz6dkqVN27qWkao4sUCSaEjC5mMVlK6fg9XQk_JnIdj5ZzJ"/>
+<div class="overflow-hidden">
+<p class="font-bold text-on-surface truncate">Alex Rivera</p>
+<p class="text-[11px] text-on-surface-variant truncate">alex@kefir.ai</p>
+</div>
+</div>
+<!-- Main Navigation Tabs -->
+<nav class="flex-1 space-y-1">
+<div class="text-[11px] font-bold text-outline uppercase tracking-widest px-4 mb-2">Personal</div>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">home</span>
+<span class="font-body-md">Home</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">person</span>
+<span class="font-body-md">Profile</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">calendar_today</span>
+<span class="font-body-md">Calendar</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">notifications</span>
+<span class="font-body-md">Notifications</span>
+</a>
+<!-- Active Tab: Connectors -->
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-surface-container-highest text-primary font-bold border-r-2 border-primary transition-colors group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hub</span>
+<span class="font-body-md">Connectors</span>
+</a>
+<div class="text-[11px] font-bold text-outline uppercase tracking-widest px-4 mb-2 mt-6">Workspace</div>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">groups</span>
+<span class="font-body-md">Team</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">monitoring</span>
+<span class="font-body-md">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">payments</span>
+<span class="font-body-md">Billing</span>
+</a>
+</nav>
+<!-- Sidebar Footer -->
+<div class="mt-auto pt-6 border-t border-outline-variant">
+<button class="w-full flex items-center justify-center gap-2 bg-primary text-on-primary py-3 rounded-lg font-bold hover:bg-primary-container transition-all active:opacity-80">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+<span>Start Recording</span>
+</button>
+<button class="w-full flex items-center gap-3 px-4 py-2.5 mt-4 rounded-lg text-error hover:bg-error-container transition-colors group">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md">Sign out</span>
+</button>
+</div>
+</aside>
+<!-- Top App Bar -->
+<header class="fixed top-0 left-[280px] right-0 h-16 bg-background border-b border-outline-variant flex justify-between items-center px-margin-desktop z-30">
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="h-6 w-[1px] bg-outline-variant"></div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface">Settings</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container-low border border-outline-variant rounded-full text-body-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none w-64 transition-all" placeholder="Search settings..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors">help</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors">notifications</span>
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-secondary font-bold text-xs">AR</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[280px] pt-16 min-h-screen bg-background">
+<div class="max-w-[1000px] mx-auto px-margin-desktop py-12">
+<!-- Header Section -->
+<div class="mb-12">
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-2">Connectors</h3>
+<p class="text-body-lg text-on-surface-variant">Connect Kefir to your favorite tools to automate your workflow and share intelligence.</p>
+</div>
+<!-- Bento Grid of Integrations -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Main Integrations Container (as per the specific UI in the reference image) -->
+<div class="col-span-full bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant bg-surface-container-low">
+<span class="text-label-mono font-bold uppercase tracking-widest text-outline">Available Integrations</span>
+</div>
+<div class="divide-y divide-outline-variant">
+<!-- Slack -->
+<div class="flex items-center justify-between p-6 hover:bg-surface-container-high transition-colors group cursor-pointer">
+<div class="flex items-center gap-5">
+<div class="w-12 h-12 flex items-center justify-center bg-white rounded-lg border border-outline-variant shadow-sm">
+<span class="material-symbols-outlined text-[#4A154B] text-[32px]">tag</span>
+</div>
+<div>
+<p class="font-bold text-on-surface text-lg">Slack</p>
+<p class="text-body-md text-on-surface-variant">Share meeting summaries to Slack channels automatically.</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="px-3 py-1 bg-success-container text-success font-bold text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity bg-green-100 text-green-700">Recommended</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+</div>
+<!-- Notion -->
+<div class="flex items-center justify-between p-6 hover:bg-surface-container-high transition-colors group cursor-pointer">
+<div class="flex items-center gap-5">
+<div class="w-12 h-12 flex items-center justify-center bg-white rounded-lg border border-outline-variant shadow-sm">
+<span class="material-symbols-outlined text-on-surface text-[32px]">sticky_note_2</span>
+</div>
+<div>
+<p class="font-bold text-on-surface text-lg">Notion</p>
+<p class="text-body-md text-on-surface-variant">Export meeting notes and action items to Notion pages.</p>
+</div>
+</div>
+<div class="flex items-center gap-4 text-primary font-bold text-sm">
+<span>Connect</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+</div>
+<!-- Zapier -->
+<div class="flex items-center justify-between p-6 hover:bg-surface-container-high transition-colors group cursor-pointer">
+<div class="flex items-center gap-5">
+<div class="w-12 h-12 flex items-center justify-center bg-white rounded-lg border border-outline-variant shadow-sm">
+<span class="material-symbols-outlined text-[#FF4F00] text-[32px]">bolt</span>
+</div>
+<div>
+<p class="font-bold text-on-surface text-lg">Zapier</p>
+<p class="text-body-md text-on-surface-variant">Connect Kefir to thousands of apps via custom triggers.</p>
+</div>
+</div>
+<div class="flex items-center gap-4 text-primary font-bold text-sm">
+<span>Connect</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+</div>
+<!-- HubSpot -->
+<div class="flex items-center justify-between p-6 hover:bg-surface-container-high transition-colors group cursor-pointer">
+<div class="flex items-center gap-5">
+<div class="w-12 h-12 flex items-center justify-center bg-white rounded-lg border border-outline-variant shadow-sm">
+<span class="material-symbols-outlined text-[#FF7A59] text-[32px]">hub</span>
+</div>
+<div>
+<p class="font-bold text-on-surface text-lg">HubSpot</p>
+<p class="text-body-md text-on-surface-variant">Sync meeting intelligence with your CRM contacts.</p>
+</div>
+</div>
+<div class="flex items-center gap-4 text-primary font-bold text-sm">
+<span>Connect</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+</div>
+<!-- Salesforce -->
+<div class="flex items-center justify-between p-6 hover:bg-surface-container-high transition-colors group cursor-pointer">
+<div class="flex items-center gap-5">
+<div class="w-12 h-12 flex items-center justify-center bg-white rounded-lg border border-outline-variant shadow-sm">
+<span class="material-symbols-outlined text-[#00A1E0] text-[32px]">cloud</span>
+</div>
+<div>
+<p class="font-bold text-on-surface text-lg">Salesforce</p>
+<p class="text-body-md text-on-surface-variant">Automatically log transcripts against opportunities.</p>
+</div>
+</div>
+<div class="flex items-center gap-4 text-primary font-bold text-sm">
+<span>Connect</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary Support Tiles -->
+<div class="lg:col-span-1 bg-white border border-outline-variant rounded-xl p-6 flex flex-col justify-between">
+<div>
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-on-primary-fixed">code</span>
+</div>
+<h4 class="font-bold text-on-surface mb-2">Custom API</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Build your own custom integrations using our robust Enterprise API documentation.</p>
+</div>
+<a class="mt-6 text-primary font-bold text-sm flex items-center gap-2 hover:underline" href="#">
+                        Developer Portal <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</a>
+</div>
+<div class="lg:col-span-1 bg-white border border-outline-variant rounded-xl p-6 flex flex-col justify-between">
+<div>
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-on-tertiary-fixed">shield</span>
+</div>
+<h4 class="font-bold text-on-surface mb-2">Privacy & Security</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Control exactly which data is shared with third-party connectors at a granular level.</p>
+</div>
+<a class="mt-6 text-primary font-bold text-sm flex items-center gap-2 hover:underline" href="#">
+                        Security Settings <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+<div class="lg:col-span-1 bg-white border border-outline-variant rounded-xl p-6 flex flex-col justify-between">
+<div>
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-on-secondary-fixed">request_quote</span>
+</div>
+<h4 class="font-bold text-on-surface mb-2">Request Connector</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Don't see your favorite tool? Let our engineering team know what you'd like to see next.</p>
+</div>
+<a class="mt-6 text-primary font-bold text-sm flex items-center gap-2 hover:underline" href="#">
+                        Submit Request <span class="material-symbols-outlined text-[16px]">edit</span>
+</a>
+</div>
+</div>
+</div>
+</main>
+<!-- Micro-interaction script -->
+<script>
+        document.querySelectorAll('.group').forEach(item => {
+            item.addEventListener('mousedown', () => {
+                item.style.transform = 'scale(0.995)';
+            });
+            item.addEventListener('mouseup', () => {
+                item.style.transform = 'scale(1)';
+            });
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

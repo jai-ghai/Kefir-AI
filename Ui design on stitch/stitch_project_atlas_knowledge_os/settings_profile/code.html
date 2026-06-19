@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profile Settings | Meeting Intelligence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-primary": "#ffffff",
+                "surface-variant": "#e0e3e5",
+                "on-secondary-fixed-variant": "#3f465c",
+                "on-error": "#ffffff",
+                "secondary": "#565e74",
+                "tertiary-fixed": "#d3e4fe",
+                "on-primary-fixed": "#00174b",
+                "outline-variant": "#c3c6d7",
+                "on-secondary-fixed": "#131b2e",
+                "primary-fixed-dim": "#b4c5ff",
+                "surface-container": "#eceef0",
+                "secondary-fixed-dim": "#bec6e0",
+                "primary-fixed": "#dbe1ff",
+                "surface-tint": "#0053db",
+                "on-surface": "#191c1e",
+                "inverse-surface": "#2d3133",
+                "error-container": "#ffdad6",
+                "tertiary-fixed-dim": "#b7c8e1",
+                "surface-bright": "#f7f9fb",
+                "on-tertiary": "#ffffff",
+                "primary-container": "#2563eb",
+                "outline": "#737686",
+                "inverse-primary": "#b4c5ff",
+                "on-secondary-container": "#5c647a",
+                "surface-container-highest": "#e0e3e5",
+                "background": "#f7f9fb",
+                "on-tertiary-container": "#e9f0ff",
+                "surface-dim": "#d8dadc",
+                "primary": "#004ac6",
+                "surface-container-lowest": "#ffffff",
+                "on-primary-fixed-variant": "#003ea8",
+                "on-tertiary-fixed-variant": "#38485d",
+                "on-primary-container": "#eeefff",
+                "tertiary-container": "#5e6e85",
+                "tertiary": "#46566c",
+                "on-tertiary-fixed": "#0b1c30",
+                "on-error-container": "#93000a",
+                "error": "#ba1a1a",
+                "inverse-on-surface": "#eff1f3",
+                "secondary-fixed": "#dae2fd",
+                "on-surface-variant": "#434655",
+                "on-secondary": "#ffffff",
+                "on-background": "#191c1e",
+                "surface-container-low": "#f2f4f6",
+                "secondary-container": "#dae2fd",
+                "surface": "#f7f9fb",
+                "surface-container-high": "#e6e8ea"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "base": "4px",
+                "margin-desktop": "40px",
+                "sidebar-width": "280px",
+                "gutter": "24px",
+                "content-max-width": "1200px",
+                "margin-mobile": "16px"
+        },
+        "fontFamily": {
+                "headline-lg": ["Inter"],
+                "body-lg": ["Inter"],
+                "timestamp": ["Geist"],
+                "label-mono": ["Geist"],
+                "headline-md": ["Inter"],
+                "transcript-text": ["Inter"],
+                "body-md": ["Inter"],
+                "headline-lg-mobile": ["Inter"]
+        },
+        "fontSize": {
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "timestamp": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                "label-mono": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "transcript-text": ["15px", {"lineHeight": "26px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+        }
+      },
+    },
+  }
+</script>
+<style>
+        body { background-color: #f7f9fb; color: #191c1e; -webkit-font-smoothing: antialiased; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; font-size: 20px; }
+        .active-nav-border { border-right: 2px solid #004ac6; }
+        input:focus, textarea:focus { outline: none; border-color: #0053db; box-shadow: 0 0 0 2px rgba(0, 83, 219, 0.1); }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- Side Navigation Bar -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface border-r border-outline-variant flex flex-col py-10 px-4 z-50">
+<div class="mb-10 px-4">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">MeetingMind</h1>
+<p class="text-on-surface-variant opacity-70 text-xs uppercase tracking-widest font-label-mono mt-1">Enterprise Intelligence</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-body-md">Home</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined">folder</span>
+<span class="font-body-md">Projects</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined">video_chat</span>
+<span class="font-body-md">Meetings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined">database</span>
+<span class="font-body-md">Knowledge</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined">check_circle</span>
+<span class="font-body-md">Tasks</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-body-md">Calendar</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-primary font-bold border-r-2 border-primary bg-surface-container-low transition-colors group" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-4 py-6 border-t border-outline-variant">
+<button class="w-full bg-primary text-on-primary py-3 rounded flex items-center justify-center gap-2 font-bold hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add_circle</span>
+                Start Recording
+            </button>
+<div class="mt-6 flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="A professional high-resolution headshot of a corporate executive with a friendly expression, set against a blurred office background with cool natural lighting. The style is clean, modern, and aligned with a premium enterprise software interface using soft blues and grays." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvTQ6l7WwkLk8KE1iS8-jLTRfplU5JwrW96ppvXUoYmsCtcu9ychJDiim2s5eEH9db5YU-41xcwaqiEwLWkQG9hwplADRd1cl2vDAxi4uLQkfu3NQfMV0TgNcypoM8ef-mkXS-YbW10pBAPsV_iPoOpMI2AroZUt0-yfyGpIDzU0NqT-TFBkFMlciLCfV8pP508DqGQWnnVQQpPcxd1jho-GIFb5rpyXL_fttd3EYV9brwb7NPnrZQYjNepkeYSF65RshNToDrrApo"/>
+<div class="overflow-hidden">
+<p class="text-sm font-bold truncate">Alex Rivera</p>
+<p class="text-xs text-on-surface-variant truncate">alex.r@kefir.ai</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Top App Bar -->
+<header class="fixed top-0 right-0 h-16 bg-background flex justify-between items-center px-margin-desktop z-40 border-b border-outline-variant ml-[280px] w-[calc(100%-280px)]">
+<div class="flex items-center gap-6 flex-1">
+<span class="font-label-mono text-label-mono uppercase tracking-widest text-on-surface-variant">Meeting Intelligence</span>
+<div class="relative w-full max-w-md focus-within:ring-2 focus-within:ring-primary rounded-lg">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-low border-none pl-10 pr-4 py-2 rounded-lg text-sm" placeholder="Search transcripts or insights..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-on-surface-variant">
+<span class="material-symbols-outlined hover:text-primary cursor-pointer transition-colors">notifications</span>
+<span class="material-symbols-outlined hover:text-primary cursor-pointer transition-colors">help</span>
+<span class="material-symbols-outlined hover:text-primary cursor-pointer transition-colors">account_circle</span>
+</div>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded font-bold text-sm hover:opacity-90 transition-opacity">
+                Create New
+            </button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-[280px] pt-16 min-h-screen">
+<div class="max-w-[1200px] mx-auto px-margin-desktop py-12">
+<div class="mb-10">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Profile Settings</h2>
+<p class="text-on-surface-variant mt-2 font-body-lg">Manage your personal information and account security preferences.</p>
+</div>
+<!-- Two-Column Layout -->
+<div class="flex flex-col lg:flex-row gap-gutter">
+<!-- Left Column: Navigation/Summary (Established Pattern) -->
+<div class="w-full lg:w-1/4">
+<nav class="flex flex-col space-y-1">
+<a class="px-4 py-3 bg-primary-container/10 text-primary font-bold rounded-lg border-l-4 border-primary" href="#">
+                            Profile
+                        </a>
+<a class="px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors rounded-lg" href="#">
+                            Notifications
+                        </a>
+<a class="px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors rounded-lg" href="#">
+                            Integrations
+                        </a>
+<a class="px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors rounded-lg" href="#">
+                            Billing
+                        </a>
+<a class="px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors rounded-lg" href="#">
+                            Team Access
+                        </a>
+</nav>
+</div>
+<!-- Right Column: Form Content -->
+<div class="w-full lg:w-3/4 space-y-gutter">
+<!-- Avatar Section -->
+<section class="bg-surface-container-lowest border border-outline-variant p-8 rounded-xl">
+<h3 class="font-headline-md text-headline-md mb-6">User Avatar</h3>
+<div class="flex items-center gap-8">
+<div class="relative group">
+<img class="w-32 h-32 rounded-full object-cover border-4 border-surface-container" data-alt="A close-up studio photograph of a young professional male with a neat beard and stylish glasses. The lighting is soft and cinematic with a neutral gray background, maintaining a professional corporate aesthetic. High resolution and sharp focus on the eyes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2X8a7FkD6NpDU5tp1-RhsaB8jv2jN2jN4Oul5A3bbcqSZDJFgGL-Kg3LKbNrxe_pTrA2N-Pueas0tDfF7IoRqOeKSqGLanNJc6vk4CTGjnip3NCT08xqd0GWQvBWnVyUnBBwWzlGHyiAkque3z_FQ3rwoZ8D4oQfVSiwxKc3K7z2Lsagj5iRjCFSA5aYSoEMQj7KSoaPgQmotVFMihW86EWfmiFaA288gOWJ1dLYuhfOn-g76UBIubVLne0dKDlT-RYcho8fjR0DJ"/>
+<div class="absolute inset-0 bg-black/20 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">edit</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex gap-3">
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-bold text-sm hover:opacity-90 transition-opacity">
+                                        Change Photo
+                                    </button>
+<button class="bg-surface-container-high text-on-surface-variant border border-outline-variant px-4 py-2 rounded-lg font-bold text-sm hover:bg-surface-variant transition-colors">
+                                        Remove
+                                    </button>
+</div>
+<p class="text-xs text-on-surface-variant font-label-mono">JPG, GIF OR PNG. MAX SIZE OF 2MB.</p>
+</div>
+</div>
+</section>
+<!-- Personal Information -->
+<section class="bg-surface-container-lowest border border-outline-variant p-8 rounded-xl">
+<h3 class="font-headline-md text-headline-md mb-6">Personal Information</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant font-label-mono">Full Name</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 text-body-md" type="text" value="Alex Rivera"/>
+</div>
+<div class="space-y-2">
+<label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant font-label-mono">Email Address</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 text-body-md" type="email" value="alex.r@kefir.ai"/>
+</div>
+<div class="space-y-2 md:col-span-2">
+<label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant font-label-mono">Job Title</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 text-body-md" type="text" value="Senior Product Strategist"/>
+</div>
+<div class="space-y-2 md:col-span-2">
+<label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant font-label-mono">Bio</label>
+<textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 text-body-md resize-none" rows="4">Passionate about leveraging AI to streamline executive communication and decision-making workflows at scale.</textarea>
+<p class="text-xs text-on-surface-variant font-label-mono text-right">0 / 250 characters</p>
+</div>
+</div>
+</section>
+<!-- Account Security -->
+<section class="bg-surface-container-lowest border border-outline-variant p-8 rounded-xl">
+<h3 class="font-headline-md text-headline-md mb-6">Account Security</h3>
+<div class="space-y-8">
+<div class="flex items-center justify-between">
+<div>
+<p class="font-bold text-on-surface">Change Password</p>
+<p class="text-sm text-on-surface-variant mt-1">Update your login password regularly for better security.</p>
+</div>
+<button class="bg-surface-container-high text-on-surface-variant border border-outline-variant px-4 py-2 rounded-lg font-bold text-sm hover:bg-surface-variant transition-colors">
+                                    Reset Password
+                                </button>
+</div>
+<hr class="border-outline-variant"/>
+<div class="flex items-center justify-between">
+<div>
+<p class="font-bold text-on-surface">Two-Factor Authentication (2FA)</p>
+<p class="text-sm text-on-surface-variant mt-1">Add an extra layer of security to your account.</p>
+</div>
+<button class="relative inline-flex h-6 w-11 items-center rounded-full bg-primary-container transition-colors focus:outline-none" id="tfa-toggle">
+<span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-6" id="tfa-dot"></span>
+</button>
+</div>
+</div>
+</section>
+<!-- Sticky Bottom Actions -->
+<div class="flex items-center justify-end gap-4 py-8 border-t border-outline-variant">
+<button class="text-on-surface-variant font-bold px-6 py-3 hover:text-primary transition-colors">
+                            Cancel
+                        </button>
+<button class="bg-primary text-on-primary px-8 py-3 rounded-lg font-bold shadow-sm hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check</span>
+                            Save Changes
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Micro-interaction for 2FA Toggle
+        const tfaToggle = document.getElementById('tfa-toggle');
+        const tfaDot = document.getElementById('tfa-dot');
+        let tfaEnabled = true;
+
+        tfaToggle.addEventListener('click', () => {
+            tfaEnabled = !tfaEnabled;
+            if (tfaEnabled) {
+                tfaToggle.classList.remove('bg-outline');
+                tfaToggle.classList.add('bg-primary-container');
+                tfaDot.classList.remove('translate-x-1');
+                tfaDot.classList.add('translate-x-6');
+            } else {
+                tfaToggle.classList.remove('bg-primary-container');
+                tfaToggle.classList.add('bg-outline');
+                tfaDot.classList.remove('translate-x-6');
+                tfaDot.classList.add('translate-x-1');
+            }
+        });
+
+        // Simple Hover Interaction for Cards
+        document.querySelectorAll('section').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.borderColor = '#0053db';
+                card.style.transition = 'border-color 0.3s ease';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.borderColor = '#e2e8f0';
+            });
+        });
+    </script>
+</body></html>
